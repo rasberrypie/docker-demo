@@ -11,10 +11,9 @@ pipeline {
         stage("Checkout") {            
             steps{
                 script {
-                    checkout scm
-                    sh "git rev-parse --short HEAD > .git/commit-id"                        
-                    def tag = new Tag()
-                    imageTag = tag.generateImageTag("develop", "${VERSION}")
+                    checkout scm                             
+                    
+                    imageTag = new Tag().tag.generateImageTag("develop", "${VERSION}")
                 }
             }
         }        
