@@ -27,8 +27,8 @@ pipeline {
         stage ("Build Image") {
             steps {
                 script {
-                   def calculator = new Calculator()
-                   println calculator.add(1,2)
+                   def container = new Container()
+                   container.build()
                 }
             }
         }
