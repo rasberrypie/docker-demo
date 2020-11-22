@@ -1,25 +1,27 @@
 @Library("pipeline-shared-lib")
 import com.acceleratedskillup.*;
-def commit_id
+def imageTag
 pipeline {
     agent any
+    environment {
+        FIELD_NAME = 'version'
+        VERSION = "1.0.${env.BUILD_ID}"
+    }
     stages {
         stage("Checkout") {
             steps{
                 script {
                     checkout scm
-                    sh "git rev-parse --short HEAD > .git/commit-id"                        
-                    commit_id = readFile('.git/commit-id').trim()
-                    sh "echo ${commit_id}"
+                    def tag = new Tag()
+                    imageTag = tag.generateImageTag("develop", "${VERSION}")
                 }
             }
-        }
-        
+        }        
         stage ("Build Image") {
             steps {
                 script {
                    def container = new Container()
-                   container.build("${commit_id}", "jenkinsrepo", ".")
+                   container.buildImage("${imageTag}", "jenkinsrepo", ".")
                 }
             }
         }
