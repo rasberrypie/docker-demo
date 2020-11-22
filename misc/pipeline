@@ -11,17 +11,15 @@ pipeline {
         stage("Checkout") {            
             steps{
                 script {
-                    checkout scm                             
-                    
+                    checkout scm
                     imageTag = new Tag().generateImageTag("develop", "${VERSION}")
                 }
             }
         }        
         stage ("Build Image") {
             steps {
-                script {
-                   def container = new Container()
-                   container.buildImage("jenkinsrepo", "${imageTag}", ".")
+                script {                   
+                   new Container().buildImage("jenkinsrepo", "${imageTag}", ".")
                 }
             }
         }
