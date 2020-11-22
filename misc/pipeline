@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                    def container = new Container()
-                   container.buildImage("${imageTag}", "jenkinsrepo", ".")
+                   container.buildImage("jenkinsrepo", "${imageTag}", ".")
                 }
             }
         }
