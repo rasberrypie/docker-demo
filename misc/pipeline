@@ -9,6 +9,9 @@ pipeline {
     }
     stages {
         stage("Checkout") {
+            agent {
+              docker {image ('alpine')}
+            }
             steps{
                 script {
                     checkout scm
