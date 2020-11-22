@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                    def container = new Container()
-                   container.build()
+                   container.build(${commit_id})
                 }
             }
         }
