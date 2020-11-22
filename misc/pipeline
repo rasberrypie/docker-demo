@@ -8,13 +8,11 @@ pipeline {
         VERSION = "1.0.${env.BUILD_ID}"
     }
     stages {
-        stage("Checkout") {
-            agent {
-              docker {image ('alpine/git:latest')}
-            }
+        stage("Checkout") {            
             steps{
                 script {
                     checkout scm
+                    sh "git rev-parse --short HEAD > .git/commit-id"                        
                     def tag = new Tag()
                     imageTag = tag.generateImageTag("develop", "${VERSION}")
                 }
