@@ -11,8 +11,8 @@ pipeline {
         stage("Checkout") {            
             steps{
                 script {
-                    checkout scm
-                    imageTag = new Tag().generateImageTag("develop", "${VERSION}")
+                    checkout scm                    
+                    imageTag = new Tag().generateImageTag(env.BRANCH_NAME, "${VERSION}")
                 }
             }
         }        
