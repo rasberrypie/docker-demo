@@ -4,23 +4,45 @@ def imageTag
 pipeline {
     agent any
     environment {        
-        VERSION = "1.0.0"
+        version = "1.0.0"
+        imageName = "jenkinsrepo"
     }
     stages {
         stage("Checkout") {            
             steps{
                 script {
                     checkout scm                    
-                    imageTag = new Tag().generateImageTag(env.BRANCH_NAME, "${VERSION}")
+                    imageTag = new Tag().generateImageTag("qa", "${version}")
                 }
             }
-        }        
+        }   
+        stage ('NPM Build') {
+          agent {
+              docker {image ('node:4.6')}
+          }
+          steps {              
+              sh 'npm install --only=dev'
+              sh 'npm test'
+          }
+        }
         stage ("Build Image") {
             steps {
                 script {                   
-                   new Container().buildImage("jenkinsrepo", "${imageTag}", ".")
+                   new Container().buildImage("${imageName}", "${imageTag}", ".")
                 }
             }
         }
+        stage('Remove Unused Docker Image') {
+            steps {
+                script {
+                    swissknife.printName "John Doe"
+                }
+            }
+        }
+    }
+    post { 
+        always { 
+            step([$class: 'WsCleanup'])
+          }
     }
 }
