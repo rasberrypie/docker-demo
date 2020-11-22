@@ -13,7 +13,7 @@ pipeline {
                 script {
                     checkout scm                             
                     
-                    imageTag = new Tag().tag.generateImageTag("develop", "${VERSION}")
+                    imageTag = new Tag().generateImageTag("develop", "${VERSION}")
                 }
             }
         }        
