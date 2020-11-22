@@ -12,7 +12,7 @@ pipeline {
             steps{
                 script {
                     checkout scm                    
-                    imageTag = new Tag().generateImageTag("qa", "${version}")
+                    imageTag = new Tag().generateImageTag(env.BRANCH_NAME, "${version}")
                 }
             }
         }   
