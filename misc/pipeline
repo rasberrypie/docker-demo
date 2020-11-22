@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                    def container = new Container()
-                   container.build(${commit_id}", "jenkinsrepo", ".")
+                   container.build("${commit_id}", "jenkinsrepo", ".")
                 }
             }
         }
