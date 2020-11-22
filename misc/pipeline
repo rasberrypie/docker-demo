@@ -14,16 +14,7 @@ pipeline {
                 }
             }
         }
-        stage ('NPM Build') {
-          agent {
-              docker {image ('node:4.6')}
-          }
-          steps {
-              sh 'ls'
-              sh 'npm install --only=dev'
-              sh 'npm test'
-          }
-        }
+        
         stage ("Build Image") {
             steps {
                 script {
