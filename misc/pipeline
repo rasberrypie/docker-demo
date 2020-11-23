@@ -31,14 +31,7 @@ pipeline {
                    new Container().buildImage("${imageName}", "${imageTag}", ".")
                 }
             }
-        }
-        stage('Remove Unused Docker Image') {
-            steps {
-                script {
-                    swissknife.printName "John Doe"
-                }
-            }
-        }
+        }        
     }
     post { 
         always { 
